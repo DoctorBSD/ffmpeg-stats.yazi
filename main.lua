@@ -575,65 +575,50 @@ local function setup(st, opts)
 		return entry and format_aspect(entry.aspect) or ""
 	end
 
-	-- Sort linemode functions
+	-- Sort linemode functions (using same formatting as display for readability)
 	function Linemode:ffmpeg_duration_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		if entry and entry.duration_ms then
-			return string.format("%012d", entry.duration_ms)
-		end
-		return ""
+		return entry and entry.duration and format_duration(entry.duration) or ""
 	end
 
 	function Linemode:ffmpeg_resolution_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		if entry and entry.resolution_pixels then
-			return string.format("%012d", entry.resolution_pixels)
-		end
-		return ""
+		return entry and format_resolution(entry.width, entry.height) or ""
 	end
 
 	function Linemode:ffmpeg_codec_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and entry.codec or ""
+		return entry and format_codec(entry.codec) or ""
 	end
 
 	function Linemode:ffmpeg_fps_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		if entry and entry.fps_numeric then
-			return string.format("%08.2f", entry.fps_numeric)
-		end
-		return ""
+		return entry and format_fps(entry.fps_str) or ""
 	end
 
 	function Linemode:ffmpeg_bitrate_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		if entry and entry.bitrate_kbps then
-			return string.format("%012d", entry.bitrate_kbps)
-		end
-		return ""
+		return entry and format_bitrate(entry.bitrate) or ""
 	end
 
 	function Linemode:ffmpeg_audio_codec_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and entry.audio_codec or ""
+		return entry and format_audio_codec(entry.audio_codec) or ""
 	end
 
 	function Linemode:ffmpeg_audio_channels_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		if entry and entry.audio_channels then
-			return string.format("%02d", entry.audio_channels)
-		end
-		return ""
+		return entry and format_audio_channels(entry.audio_channels) or ""
 	end
 
 	function Linemode:ffmpeg_format_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and entry.format or ""
+		return entry and format_format(entry.format) or ""
 	end
 
 	function Linemode:ffmpeg_aspect_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and entry.aspect or ""
+		return entry and format_aspect(entry.aspect) or ""
 	end
 end
 

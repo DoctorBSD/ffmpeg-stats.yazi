@@ -118,15 +118,17 @@ linemode = "ffmpeg_duration"    -- Show only duration
 ```
 
 Available linemodes:
-- `ffmpeg_duration`
-- `ffmpeg_resolution`
-- `ffmpeg_codec`
-- `ffmpeg_fps`
-- `ffmpeg_bitrate`
-- `ffmpeg_audio_codec`
-- `ffmpeg_audio_channels`
-- `ffmpeg_format`
-- `ffmpeg_aspect`
+- `ffmpeg_duration` - Display: "01:23:45"
+- `ffmpeg_resolution` - Display: "1920x1080"
+- `ffmpeg_codec` - Display: "H264"
+- `ffmpeg_fps` - Display: "30fps"
+- `ffmpeg_bitrate` - Display: "5.2Mbps"
+- `ffmpeg_audio_codec` - Display: "AAC"
+- `ffmpeg_audio_channels` - Display: "stereo"
+- `ffmpeg_format` - Display: "MP4"
+- `ffmpeg_aspect` - Display: "16:9"
+
+For sorting, use the corresponding `*_sort` linemode (e.g., `ffmpeg_duration_sort`), which uses the same formatting for readability.
 
 ## How It Works
 
@@ -136,7 +138,7 @@ Available linemodes:
 
 3. **Conditional Display**: Only enabled stats appear in the linemode column. Toggle any combination you want.
 
-4. **Smart Sorting**: Sort commands temporarily switch to a hidden sort linemode, perform the sort, then automatically restore your previous linemode.
+4. **Smart Sorting**: Sort commands temporarily switch to a readable sort linemode (using the same formatting as display), perform the sort, then automatically restore your previous linemode.
 
 ## Usage Notes
 
