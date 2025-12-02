@@ -94,16 +94,16 @@ Sort by any stat while preserving your current linemode:
 { on = [ ",", "b" ], run = "plugin ffmpeg-stats-lm -- sort-bitrate", desc = "Sort by bitrate" },
 ```
 
-Available sort commands:
-- `sort-duration` / `sort-duration-reverse`
-- `sort-resolution` / `sort-resolution-reverse`
-- `sort-codec` / `sort-codec-reverse`
-- `sort-fps` / `sort-fps-reverse`
-- `sort-bitrate` / `sort-bitrate-reverse`
-- `sort-audio-codec` / `sort-audio-codec-reverse`
-- `sort-audio-channels` / `sort-audio-channels-reverse`
-- `sort-format` / `sort-format-reverse`
-- `sort-aspect` / `sort-aspect-reverse`
+Available sort commands (internal linemode names in parentheses):
+- `sort-duration` / `sort-duration-reverse` (uses `ffmpeg_duration_sort`)
+- `sort-resolution` / `sort-resolution-reverse` (uses `ffmpeg_res_sort`)
+- `sort-codec` / `sort-codec-reverse` (uses `ffmpeg_codec_sort`)
+- `sort-fps` / `sort-fps-reverse` (uses `ffmpeg_fps_sort`)
+- `sort-bitrate` / `sort-bitrate-reverse` (uses `ffmpeg_bitrate_sort`)
+- `sort-audio-codec` / `sort-audio-codec-reverse` (uses `ffmpeg_acodec_sort`)
+- `sort-audio-channels` / `sort-audio-channels-reverse` (uses `ffmpeg_channels_sort`)
+- `sort-format` / `sort-format-reverse` (uses `ffmpeg_format_sort`)
+- `sort-aspect` / `sort-aspect-reverse` (uses `ffmpeg_aspect_sort`)
 
 ### Direct Linemode Usage
 
@@ -128,7 +128,9 @@ Available linemodes:
 - `ffmpeg_format` - Display: "MP4"
 - `ffmpeg_aspect` - Display: "16:9"
 
-For sorting, use the corresponding `*_sort` linemode (e.g., `ffmpeg_duration_sort`), which uses the same formatting for readability.
+For sorting, use the corresponding `*_sort` linemode (e.g., `ffmpeg_duration_sort`, `ffmpeg_res_sort`), which uses the same formatting for readability.
+
+**Note**: Yazi requires linemode names to be 20 characters or less, so some sort linemodes use abbreviated names (e.g., `ffmpeg_res_sort` instead of `ffmpeg_resolution_sort`).
 
 ## How It Works
 

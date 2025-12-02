@@ -358,19 +358,29 @@ end)
 --- Sort Functions ---
 
 local current_linemode = ya.sync(function()
-	local tab = cx and cx.active
-	if not tab then
+	local ok, result = pcall(function()
+		local tab = cx and cx.active
+		if not tab then
+			return nil
+		end
+		local current = tab.current and tab.current.linemode
+		local pref = tab.pref and tab.pref.linemode
+		if current and current ~= "" then
+			return current
+		end
+		if pref and pref ~= "" then
+			return pref
+		end
+		return nil
+	end)
+	if ok then
+		return result
+	else
+		if DEBUG then
+			log_debug("current_linemode error:", result)
+		end
 		return nil
 	end
-	local current = tab.current and tab.current.linemode
-	local pref = tab.pref and tab.pref.linemode
-	if current and current ~= "" then
-		return current
-	end
-	if pref and pref ~= "" then
-		return pref
-	end
-	return nil
 end)
 
 local function safe_current_linemode()
@@ -388,7 +398,10 @@ local function safe_current_linemode()
 end
 
 local function set_linemode(mode)
-	if not mode or mode == "" then
+	if not mode or mode == "" or #mode > 20 then
+		if DEBUG then
+			log_debug("Invalid linemode:", mode, "length:", mode and #mode or 0)
+		end
 		return
 	end
 	ya.mgr_emit("linemode", { mode })
@@ -581,9 +594,12 @@ local function setup(st, opts)
 		return entry and entry.duration and format_duration(entry.duration) or ""
 	end
 
-	function Linemode:ffmpeg_resolution_sort()
+	function Linemode:ffmpeg_res_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and format_resolution(entry.width, entry.height) or ""
+		if not entry or entry == false then
+			return ""
+		end
+		return format_resolution(entry.width, entry.height)
 	end
 
 	function Linemode:ffmpeg_codec_sort()
@@ -601,12 +617,12 @@ local function setup(st, opts)
 		return entry and format_bitrate(entry.bitrate) or ""
 	end
 
-	function Linemode:ffmpeg_audio_codec_sort()
+	function Linemode:ffmpeg_acodec_sort()
 		local entry = st.cache[tostring(self._file.url)]
 		return entry and format_audio_codec(entry.audio_codec) or ""
 	end
 
-	function Linemode:ffmpeg_audio_channels_sort()
+	function Linemode:ffmpeg_channels_sort()
 		local entry = st.cache[tostring(self._file.url)]
 		return entry and format_audio_channels(entry.audio_channels) or ""
 	end
@@ -657,9 +673,9 @@ local function entry(_, job)
 	elseif cmd == "sort-duration-reverse" then
 		sort_with("ffmpeg_duration_sort", true)
 	elseif cmd == "sort-resolution" then
-		sort_with("ffmpeg_resolution_sort", false)
+		sort_with("ffmpeg_res_sort", false)
 	elseif cmd == "sort-resolution-reverse" then
-		sort_with("ffmpeg_resolution_sort", true)
+		sort_with("ffmpeg_res_sort", true)
 	elseif cmd == "sort-codec" then
 		sort_with("ffmpeg_codec_sort", false)
 	elseif cmd == "sort-codec-reverse" then
@@ -673,13 +689,13 @@ local function entry(_, job)
 	elseif cmd == "sort-bitrate-reverse" then
 		sort_with("ffmpeg_bitrate_sort", true)
 	elseif cmd == "sort-audio-codec" then
-		sort_with("ffmpeg_audio_codec_sort", false)
+		sort_with("ffmpeg_acodec_sort", false)
 	elseif cmd == "sort-audio-codec-reverse" then
-		sort_with("ffmpeg_audio_codec_sort", true)
+		sort_with("ffmpeg_acodec_sort", true)
 	elseif cmd == "sort-audio-channels" then
-		sort_with("ffmpeg_audio_channels_sort", false)
+		sort_with("ffmpeg_channels_sort", false)
 	elseif cmd == "sort-audio-channels-reverse" then
-		sort_with("ffmpeg_audio_channels_sort", true)
+		sort_with("ffmpeg_channels_sort", true)
 	elseif cmd == "sort-format" then
 		sort_with("ffmpeg_format_sort", false)
 	elseif cmd == "sort-format-reverse" then
