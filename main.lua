@@ -170,15 +170,40 @@ local function parse_ffprobe_json(json_str)
 		return nil
 	end
 
-	-- Find video stream (first stream, usually)
-	local video_stream = streams:match("(%b{})")
-
 	local info = {}
+
+	-- Find video stream (one that has width and height)
+	local video_stream = nil
+	local pos = 1
+	while true do
+		local stream = streams:match("(%b{})", pos)
+		if not stream then
+			break
+		end
+		-- Check if this stream has width and height (indicates video)
+		local width = extract_json_value(stream, "width", true)
+		local height = extract_json_value(stream, "height", true)
+		if width and height and width > 0 and height > 0 then
+			-- Prefer larger resolution (skip thumbnails)
+			if not video_stream then
+				video_stream = stream
+				info.width = width
+				info.height = height
+			else
+				-- If we found a larger stream, use that instead
+				if width * height > (info.width or 0) * (info.height or 0) then
+					video_stream = stream
+					info.width = width
+					info.height = height
+				end
+			end
+		end
+		pos = pos + #stream
+	end
 
 	-- Extract video stats if video stream exists
 	if video_stream then
-		info.width = extract_json_value(video_stream, "width", true)
-		info.height = extract_json_value(video_stream, "height", true)
+		-- width and height already extracted above
 		info.codec = extract_json_value(video_stream, "codec_name")
 		info.fps_str = extract_json_value(video_stream, "r_frame_rate")
 		info.bitrate = extract_json_value(video_stream, "bit_rate", true)
