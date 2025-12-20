@@ -2,13 +2,13 @@
 --- Displays multiple media file stats using ffprobe
 
 local DEBUG = os.getenv("YAZI_FFMPEG_STATS_DEBUG") == "1"
-local PLUGIN_ID = "ffmpeg-stats-lm"
+local PLUGIN_ID = "ffmpeg-stats"
 
 local function log_debug(...)
 	if not DEBUG then
 		return
 	end
-	local parts = { "[ffmpeg-stats-lm]" }
+	local parts = { "[ffmpeg-stats]" }
 	for i = 1, select("#", ...) do
 		parts[#parts + 1] = tostring(select(i, ...))
 	end
@@ -490,7 +490,7 @@ local function setup(st, opts)
 		aspect = opts.aspect == true,
 	}
 
-	local theme = th.ffmpeg_stats_lm or {}
+	local theme = th.ffmpeg_stats or {}
 	st.style = opts.style or (theme.style and ui.Style(theme.style))
 	st.order = opts.order or 1600
 
@@ -741,7 +741,7 @@ local function entry(_, job)
 		local target = job.args and job.args[2]
 		restore_linemode_direct(target)
 	else
-		ya.err(string.format("ffmpeg-stats-lm: unknown command '%s'", tostring(cmd)))
+		ya.err(string.format("ffmpeg-stats: unknown command '%s'", tostring(cmd)))
 	end
 end
 
