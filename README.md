@@ -63,20 +63,21 @@ Each stat can be toggled independently:
 ```toml
 # In ~/.config/yazi/keymap.toml
 
-# Toggle individual stats
-{ on = [ "m", "d" ], run = "plugin ffmpeg-stats-lm -- toggle-duration", desc = "Toggle duration" },
-{ on = [ "m", "r" ], run = "plugin ffmpeg-stats-lm -- toggle-resolution", desc = "Toggle resolution" },
-{ on = [ "m", "c" ], run = "plugin ffmpeg-stats-lm -- toggle-codec", desc = "Toggle codec" },
-{ on = [ "m", "f" ], run = "plugin ffmpeg-stats-lm -- toggle-fps", desc = "Toggle FPS" },
-{ on = [ "m", "b" ], run = "plugin ffmpeg-stats-lm -- toggle-bitrate", desc = "Toggle bitrate" },
-{ on = [ "m", "a" ], run = "plugin ffmpeg-stats-lm -- toggle-audio-codec", desc = "Toggle audio codec" },
-{ on = [ "m", "h" ], run = "plugin ffmpeg-stats-lm -- toggle-audio-channels", desc = "Toggle audio channels" },
-{ on = [ "m", "o" ], run = "plugin ffmpeg-stats-lm -- toggle-format", desc = "Toggle format" },
-{ on = [ "m", "s" ], run = "plugin ffmpeg-stats-lm -- toggle-aspect", desc = "Toggle aspect ratio" },
+## ffmpeg linemodes
+# individual stats
+{ on = [ "m", "f", "d" ], run = "plugin ffmpeg-stats-lm -- toggle-duration", desc = "Toggle duration" },
+{ on = [ "m", "f", "r" ], run = "plugin ffmpeg-stats-lm -- toggle-resolution", desc = "Toggle resolution" },
+{ on = [ "m", "f", "c" ], run = "plugin ffmpeg-stats-lm -- toggle-codec", desc = "Toggle codec" },
+{ on = [ "m", "f", "f" ], run = "plugin ffmpeg-stats-lm -- toggle-fps", desc = "Toggle FPS" },
+{ on = [ "m", "f", "b" ], run = "plugin ffmpeg-stats-lm -- toggle-bitrate", desc = "Toggle bitrate" },
+{ on = [ "m", "f", "a" ], run = "plugin ffmpeg-stats-lm -- toggle-audio-codec", desc = "Toggle audio codec" },
+{ on = [ "m", "f", "h" ], run = "plugin ffmpeg-stats-lm -- toggle-audio-channels", desc = "Toggle audio channels" },
+{ on = [ "m", "f", "o" ], run = "plugin ffmpeg-stats-lm -- toggle-format", desc = "Toggle format" },
+{ on = [ "m", "f", "s" ], run = "plugin ffmpeg-stats-lm -- toggle-aspect", desc = "Toggle aspect ratio" },
 
 # Bulk toggle operations
-{ on = [ "m", "A" ], run = "plugin ffmpeg-stats-lm -- toggle-all", desc = "Toggle all stats" },
-{ on = [ "m", "D" ], run = "plugin ffmpeg-stats-lm -- disable-all", desc = "Disable all stats" },
+{ on = [ "m", "f", "A" ], run = "plugin ffmpeg-stats-lm -- toggle-all", desc = "Toggle all stats" },
+{ on = [ "m", "f", "D" ], run = "plugin ffmpeg-stats-lm -- disable-all", desc = "Disable all stats" },
 ```
 
 ### Sort Commands
