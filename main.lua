@@ -503,38 +503,10 @@ local function setup(st, opts)
 
 		local parts = {}
 
-		if st.enabled.duration and entry.duration then
-			local dur = format_duration(entry.duration)
-			if dur ~= "" then
-				parts[#parts + 1] = dur
-			end
-		end
-
-		if st.enabled.resolution and entry.width and entry.height then
-			local res = format_resolution(entry.width, entry.height)
-			if res ~= "" then
-				parts[#parts + 1] = res
-			end
-		end
-
-		if st.enabled.codec and entry.codec then
-			local codec = format_codec(entry.codec)
-			if codec ~= "" then
-				parts[#parts + 1] = codec
-			end
-		end
-
-		if st.enabled.fps and entry.fps_str then
-			local fps = format_fps(entry.fps_str)
-			if fps ~= "" then
-				parts[#parts + 1] = fps
-			end
-		end
-
-		if st.enabled.bitrate and entry.bitrate then
-			local br = format_bitrate(entry.bitrate)
-			if br ~= "" then
-				parts[#parts + 1] = br
+		if st.enabled.audio_channels and entry.audio_channels then
+			local ach = format_audio_channels(entry.audio_channels)
+			if ach ~= "" then
+				parts[#parts + 1] = ach
 			end
 		end
 
@@ -545,10 +517,24 @@ local function setup(st, opts)
 			end
 		end
 
-		if st.enabled.audio_channels and entry.audio_channels then
-			local ach = format_audio_channels(entry.audio_channels)
-			if ach ~= "" then
-				parts[#parts + 1] = ach
+		if st.enabled.bitrate and entry.bitrate then
+			local br = format_bitrate(entry.bitrate)
+			if br ~= "" then
+				parts[#parts + 1] = br
+			end
+		end
+
+		if st.enabled.fps and entry.fps_str then
+			local fps = format_fps(entry.fps_str)
+			if fps ~= "" then
+				parts[#parts + 1] = fps
+			end
+		end
+
+		if st.enabled.codec and entry.codec then
+			local codec = format_codec(entry.codec)
+			if codec ~= "" then
+				parts[#parts + 1] = codec
 			end
 		end
 
@@ -563,6 +549,20 @@ local function setup(st, opts)
 			local asp = format_aspect(entry.aspect)
 			if asp ~= "" then
 				parts[#parts + 1] = asp
+			end
+		end
+
+		if st.enabled.resolution and entry.width and entry.height then
+			local res = format_resolution(entry.width, entry.height)
+			if res ~= "" then
+				parts[#parts + 1] = res
+			end
+		end
+
+		if st.enabled.duration and entry.duration then
+			local dur = format_duration(entry.duration)
+			if dur ~= "" then
+				parts[#parts + 1] = dur
 			end
 		end
 
