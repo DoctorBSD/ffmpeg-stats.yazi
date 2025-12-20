@@ -1,7 +1,6 @@
 # ffmpeg-stats.yazi
 
-
-This is a yazi plugin that allows you view the stats of media files using ffprobe.
+A [Yazi](https://github.com/sxyazi/yazi) plugin that displays media file statistics in the linemode column using `ffprobe`.
 
 ![Linemode Demo](assets/linemode_demo.png)
 
