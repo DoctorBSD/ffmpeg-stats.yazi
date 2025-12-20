@@ -33,7 +33,7 @@ local function is_media_file(file)
 		return false
 	end
 	local ext = name:match("%.([^.]+)$")
-	return ext and MEDIA_EXTENSIONS[ext:lower()] == true or false
+	return ext ~= nil and MEDIA_EXTENSIONS[ext:lower()] == true
 end
 
 --- Format Functions ---
@@ -490,8 +490,7 @@ local function setup(st, opts)
 		aspect = opts.aspect == true,
 	}
 
-	local theme = th.ffmpeg_stats or {}
-	st.style = opts.style or (theme.style and ui.Style(theme.style))
+	st.style = opts.style
 	st.order = opts.order or 1600
 
 	-- Register display callback using children_add

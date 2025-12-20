@@ -1,6 +1,11 @@
 # ffmpeg-stats.yazi
 
-Display multiple media file statistics inside the linemode column using `ffprobe` (part of FFmpeg). This plugin provides 9 independent toggleable stats:
+
+This is a yazi plugin that allows you view the stats of media files using ffprobe.
+
+![Linemode Demo](assets/linemode_demo.png)
+
+### Available stats
 
 - **Duration** - Media length (HH:MM:SS format)
 - **Resolution** - Video dimensions (e.g., 1920x1080)
@@ -25,18 +30,17 @@ This plugin supports two configurations depending on your Yazi version:
 **Future Yazi (custom fork with sorting-by-linemode support)**
 - Full linemode display + sorting support
 - Requires my fork
-- If my PR is merged then this functionality will be available in the official version of yazi
 - See [Future Version Usage (with Sorting)](#future-version-usage-with-sorting) below
 
 ## Requirements
 
-- `ffprobe` available in your `PATH` (`ffprobe` ships with FFmpeg)
+- `ffprobe` available in your `PATH` (`ffprobe` is part of `ffmpeg`)
 
 ---
 
 # Current Version Usage
 
-For Yazi v0.4.0 and earlier, or main branch builds without sorting support.
+In the current version of yazi this plugin supports showing the media stats in the linemode.
 
 ## Installation
 
@@ -46,7 +50,7 @@ For Yazi v0.4.0 and earlier, or main branch builds without sorting support.
     git clone https://github.com/grimandgreedy/ffmpeg-stats.yazi ~/.config/yazi/plugins
     ```
 
-2. Register the fetcher so Yazi can run `ffprobe` in the background:
+2. Register the fetcher
 
 ```toml
 # In ~/.config/yazi/yazi.toml
@@ -99,65 +103,32 @@ Add toggle commands to `~/.config/yazi/keymap.toml`:
 { on = [ "m", "f", "D" ], run = "plugin ffmpeg-stats -- disable-all", desc = "Disable all stats" },
 ```
 
-## Direct Linemode Usage
-
-You can use individual stats as direct linemodes in your settings:
-
-```lua
--- In Yazi configuration
-linemode = "ffmpeg_resolution"  -- Show only resolution
-linemode = "ffmpeg_codec"       -- Show only codec
-linemode = "ffmpeg_duration"    -- Show only duration
--- etc.
-```
-
-Available linemodes:
-- `ffmpeg_duration` - Display: "01:23:45"
-- `ffmpeg_resolution` - Display: "1920x1080"
-- `ffmpeg_codec` - Display: "H264"
-- `ffmpeg_fps` - Display: "30fps"
-- `ffmpeg_bitrate` - Display: "5.2Mbps"
-- `ffmpeg_audio_codec` - Display: "AAC"
-- `ffmpeg_audio_channels` - Display: "stereo"
-- `ffmpeg_format` - Display: "MP4"
-- `ffmpeg_aspect` - Display: "16:9"
-
-## Troubleshooting
-
-### No stats appearing
-
-1. Ensure `ffprobe` is installed: `which ffprobe`
-2. Check the fetcher is registered in `yazi.toml`
-3. Check the plugin is loaded in `init.lua`
-4. Try toggling a stat with your keybinding
-5. Enable debug mode and check logs:
-   ```bash
-   YAZI_FFMPEG_STATS_DEBUG=1 yazi
-   # Then check: ~/.local/state/yazi/yazi.log
-   ```
-
-### Stats not updating
-
-- Stats are cached per-file. Restart Yazi to refresh the cache.
-
 ---
 
-# Future Version Usage (with Sorting)
+# Future Yazi Version Usage (with Sorting)
 
-I created a fork of yazi in which I implemented the ability to sort by linemode values. This allows us to sort files by, say, duration. 
+## NOTE: SORTING IS NOT SUPPORTED IN THE YAZI STANDARD RELEASE
 
-The functionality is implemented and working but I still need to find time to check it over before I make a PR. Once I do, hopefully, this will be available in the main version of yazi.
+![sort demo](assets/sort_by_duration_demo.png)
+
+I created a fork of yazi in which I implemented the ability to sort by linemode values. I am not sure if this will be merged into the release version of yazi. If you are reading this it is likely not yet supported.
+
+The functionality is implemented and working but I still need to find time to check it over before I make a PR.
 
 
 ## Installation
 
-1. Clone this plugin
+1. Clone my fork of yazi
+
+2. Build yazi
+
+3. Clone this plugin
 
     ```
     git clone https://github.com/grimandgreedy/ffmpeg-stats.yazi ~/.config/yazi/plugins
     ```
 
-2. Register the fetcher so Yazi runs `ffprobe` in the background:
+4. Register the fetcher so Yazi runs `ffprobe` in the background:
 
    ```toml
    # In ~/.config/yazi/yazi.toml
@@ -167,7 +138,7 @@ The functionality is implemented and working but I still need to find time to ch
    run = "ffmpeg-stats"
    ```
 
-3. Load the plugin in `~/.config/yazi/init.lua`:
+5. Load the plugin in `~/.config/yazi/init.lua`:
 
    ```lua
     require("ffmpeg-stats"):setup({
@@ -229,39 +200,3 @@ Add both toggle and sort commands to `~/.config/yazi/keymap.toml`:
 { on = [ ",", "f", "s" ], run = "plugin ffmpeg-stats -- sort-aspect", desc = "Sort by aspect ratio" },
 { on = [ ",", "f", "S" ], run = "plugin ffmpeg-stats -- sort-aspect-reverse", desc = "Sort by aspect ratio (reverse)" },
 ```
-
-# Direct Linemode Usage
-
-You can use individual stats as direct linemodes in your settings:
-
-```lua
--- In Yazi configuration
-linemode = "ffmpeg_resolution"  -- Show resolution
-linemode = "ffmpeg_codec"       -- Show codec
-linemode = "ffmpeg_duration"    -- Show duration
--- etc.
-```
-
-Available linemodes:
-- `ffmpeg_duration` - Display: "01:23:45"
-- `ffmpeg_resolution` - Display: "1920x1080"
-- `ffmpeg_codec` - Display: "H264"
-- `ffmpeg_fps` - Display: "30fps"
-- `ffmpeg_bitrate` - Display: "5.2Mbps"
-- `ffmpeg_audio_codec` - Display: "AAC"
-- `ffmpeg_audio_channels` - Display: "stereo"
-- `ffmpeg_format` - Display: "MP4"
-- `ffmpeg_aspect` - Display: "16:9"
-
-**Note**: Yazi requires linemode names to be 20 characters or less, so some sort linemodes use abbreviated names (e.g., `ffmpeg_res_sort` instead of `ffmpeg_resolution_sort`).
-
-Available sort linemodes (internal names):
-- `ffmpeg_duration_sort` / `*_reverse`
-- `ffmpeg_res_sort` / `*_reverse` (for resolution)
-- `ffmpeg_codec_sort` / `*_reverse`
-- `ffmpeg_fps_sort` / `*_reverse`
-- `ffmpeg_bitrate_sort` / `*_reverse`
-- `ffmpeg_acodec_sort` / `*_reverse` (for audio codec)
-- `ffmpeg_channels_sort` / `*_reverse` (for audio channels)
-- `ffmpeg_format_sort` / `*_reverse`
-- `ffmpeg_aspect_sort` / `*_reverse`
