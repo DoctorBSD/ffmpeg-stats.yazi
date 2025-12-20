@@ -90,6 +90,14 @@ local function format_bitrate(bitrate_num)
 	return string.format("%dkbps", kbps)
 end
 
+local function format_bitrate_kbps(bitrate_num)
+	if not bitrate_num or bitrate_num <= 0 then
+		return ""
+	end
+	local kbps = math.floor(bitrate_num / 1000)
+	return string.format("%dkbps", kbps)
+end
+
 local function format_audio_codec(codec)
 	if not codec or codec == "" then
 		return ""
@@ -614,7 +622,7 @@ local function setup(st, opts)
 
 	function Linemode:ffmpeg_bitrate_sort()
 		local entry = st.cache[tostring(self._file.url)]
-		return entry and format_bitrate(entry.bitrate) or ""
+		return entry and format_bitrate_kbps(entry.bitrate) or ""
 	end
 
 	function Linemode:ffmpeg_acodec_sort()
