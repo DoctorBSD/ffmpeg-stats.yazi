@@ -110,16 +110,26 @@ Add toggle commands to `~/.config/yazi/keymap.toml`:
 
 ![sort demo](assets/sort_by_duration_demo.png)
 
-I created a fork of yazi in which I implemented the ability to sort by linemode values. I am not sure if this will be merged into the release version of yazi. If you are reading this it is likely not yet supported.
+I created a [fork of yazi](https://github.com/grimandgreedy/yazi/tree/custom_sort) in which I implemented the ability to sort by linemode values. I am not sure if this will be merged into the release version. If you are reading this it is likely not yet supported.
 
 The functionality is implemented and working but I still need to find time to check it over before I make a PR.
 
 
 ## Installation
 
-1. Clone my fork of yazi
+1. Clone my fork of yazi: 
 
-2. Build yazi
+    ```
+    git clone https://github.com/grimandgreedy/yazi
+    cd yazi
+    git checkout custom_sort
+    ```
+
+2. Build yazi and run the build version
+    ```
+    cargo build --release
+    ./target/release/yazi
+    ```
 
 3. Clone this plugin
 
@@ -127,7 +137,7 @@ The functionality is implemented and working but I still need to find time to ch
     git clone https://github.com/grimandgreedy/ffmpeg-stats.yazi ~/.config/yazi/plugins
     ```
 
-4. Register the fetcher so Yazi runs `ffprobe` in the background:
+4. Register the fetcher
 
    ```toml
    # In ~/.config/yazi/yazi.toml
