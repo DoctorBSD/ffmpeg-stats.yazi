@@ -51,13 +51,13 @@ In the current version of yazi this plugin supports showing the media stats in t
 
 2. Register the fetcher
 
-```toml
-# In ~/.config/yazi/yazi.toml
-[[plugin.prepend_fetchers]]
-id  = "ffmpeg_stats"
-name = "*"
-run = "ffmpeg-stats"
-```
+    ```toml
+    # In ~/.config/yazi/yazi.toml
+    [[plugin.prepend_fetchers]]
+    id  = "ffmpeg_stats"
+    name = "*"
+    run = "ffmpeg-stats"
+    ```
 
 3. Load the plugin in `~/.config/yazi/init.lua`:
 
