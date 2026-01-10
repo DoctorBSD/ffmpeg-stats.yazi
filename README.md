@@ -2,7 +2,7 @@
 
 A [Yazi](https://github.com/sxyazi/yazi) plugin that displays media file statistics in the linemode column using `ffprobe`.
 
-## Note: If you previously installed this plugin and it has stopped working you need to update the prefetcher info in `yazi.toml`. You need to change `name = "*"` to `url = "*"`
+**Note: If you previously installed this plugin and it has stopped working you need to update the prefetcher info in `yazi.toml`. You need to change `name = "*"` to `url = "*"`**
 
 ![Linemode Demo](assets/linemode_demo.png)
 
